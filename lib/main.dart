@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:multilang/LanguageChangeProvider.dart';
+import 'package:multilang/generated/l10n.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -7,12 +11,24 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
+    return ChangeNotifierProvider<LanguageChangeProvider>(
+      create: (context) => LanguageChangeProvider(),
+      child: Builder(
+        builder: (context) => MaterialApp(
+          locale: Provider.of<LanguageChangeProvider>(context, listen: true).currentLocale,
+          localizationsDelegates:[
+            S.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.deepPurple,
+          ),
+          home: MyHomePage(),
+        ),
       ),
-      home: MyHomePage(),
     );
   }
 }
@@ -23,7 +39,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +50,19 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'You have pushed the button this many times:',
+              S.of(context).Hello,
+            ),
+            InkWell(
+              onTap: (){
+                context.read<LanguageChangeProvider>().ChangeLocale('en');
+              },
+              child: Text('en'),
+            ),
+            InkWell(
+              onTap: (){
+                context.read<LanguageChangeProvider>().ChangeLocale('fa');
+              },
+              child: Text('fa'),
             ),
           ],
         ),
