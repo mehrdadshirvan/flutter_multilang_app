@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('multi lang application'),
+        title: Text(S.of(context).Welcome),
       ),
       body: Center(
         child: Column(
@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             InkWell(
               onTap: (){
-
+                new Locale('en');
                 context.read<LanguageChangeProvider>().ChangeLocale('en');
                 print(S.of(context).Hello);
               },
@@ -62,6 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             InkWell(
               onTap: (){
+                new Locale('fa');
                 context.read<LanguageChangeProvider>().ChangeLocale('fa');
                 print(S.of(context).Hello);
               },
