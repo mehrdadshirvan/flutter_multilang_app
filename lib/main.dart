@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       create: (context) => LanguageChangeProvider(),
       child: Builder(
         builder: (context) => MaterialApp(
-          locale: Provider.of<LanguageChangeProvider>(context, listen: true).currentLocale,
+          locale: Provider.of<LanguageChangeProvider>(context, listen: true).currentLocaleLang,
           localizationsDelegates:[
             S.delegate,
             GlobalMaterialLocalizations.delegate,
@@ -54,13 +54,16 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             InkWell(
               onTap: (){
+
                 context.read<LanguageChangeProvider>().ChangeLocale('en');
+                print(S.of(context).Hello);
               },
               child: Text('en'),
             ),
             InkWell(
               onTap: (){
                 context.read<LanguageChangeProvider>().ChangeLocale('fa');
+                print(S.of(context).Hello);
               },
               child: Text('fa'),
             ),
